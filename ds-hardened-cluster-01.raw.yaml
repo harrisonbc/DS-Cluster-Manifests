@@ -1,0 +1,359 @@
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-24ljs
+    field.cattle.io/description: An RKE2 Hardened Cluster
+  creationTimestamp: '2024-02-13T09:51:47Z'
+  finalizers:
+    - wrangler.cattle.io/cloud-config-secret-remover
+    - wrangler.cattle.io/provisioning-cluster-remove
+    - wrangler.cattle.io/rke-cluster-remove
+  generation: 2
+  managedFields:
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"wrangler.cattle.io/cloud-config-secret-remover": {}
+        f:spec:
+          f:rkeConfig:
+            f:machinePoolDefaults: {}
+            f:upgradeStrategy:
+              f:controlPlaneDrainOptions:
+                f:ignoreErrors: {}
+                f:postDrainHooks: {}
+                f:preDrainHooks: {}
+              f:workerDrainOptions:
+                f:ignoreErrors: {}
+                f:postDrainHooks: {}
+                f:preDrainHooks: {}
+      manager: rancher-v2.8.2-secret-migrator
+      operation: Update
+      time: '2024-02-13T09:51:47Z'
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:field.cattle.io/description: {}
+          f:finalizers:
+            v:"wrangler.cattle.io/provisioning-cluster-remove": {}
+            v:"wrangler.cattle.io/rke-cluster-remove": {}
+        f:spec:
+          .: {}
+          f:defaultPodSecurityAdmissionConfigurationTemplateName: {}
+          f:kubernetesVersion: {}
+          f:localClusterAuthEndpoint: {}
+          f:rkeConfig:
+            .: {}
+            f:chartValues:
+              .: {}
+              f:rke2-cilium:
+                .: {}
+                f:hubble:
+                  .: {}
+                  f:enabled: {}
+                  f:relay:
+                    .: {}
+                    f:enabled: {}
+                  f:ui:
+                    .: {}
+                    f:enabled: {}
+                f:operator:
+                  .: {}
+                  f:replicas: {}
+            f:etcd:
+              .: {}
+              f:s3:
+                .: {}
+                f:bucket: {}
+                f:endpoint: {}
+                f:folder: {}
+                f:region: {}
+              f:snapshotRetention: {}
+              f:snapshotScheduleCron: {}
+            f:machineGlobalConfig:
+              .: {}
+              f:cni: {}
+              f:disable-kube-proxy: {}
+              f:etcd-expose-metrics: {}
+            f:machineSelectorConfig: {}
+            f:registries:
+              .: {}
+              f:configs:
+                .: {}
+                f:harbor.brynnharrison.com:
+                  .: {}
+                  f:authConfigSecretName: {}
+              f:mirrors:
+                .: {}
+                f:docker.io:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+                f:gcr.io:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+                f:ghcr.io:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+                f:k8s.gcr.io:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+                f:quay.io:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+                f:registry.rancher.com:
+                  .: {}
+                  f:endpoint: {}
+                  f:rewrite:
+                    .: {}
+                    f:(.*): {}
+            f:upgradeStrategy:
+              .: {}
+              f:controlPlaneConcurrency: {}
+              f:controlPlaneDrainOptions:
+                .: {}
+                f:deleteEmptyDirData: {}
+                f:disableEviction: {}
+                f:enabled: {}
+                f:force: {}
+                f:gracePeriod: {}
+                f:ignoreDaemonSets: {}
+                f:skipWaitForDeleteTimeoutSeconds: {}
+                f:timeout: {}
+              f:workerConcurrency: {}
+              f:workerDrainOptions:
+                .: {}
+                f:deleteEmptyDirData: {}
+                f:disableEviction: {}
+                f:enabled: {}
+                f:force: {}
+                f:gracePeriod: {}
+                f:ignoreDaemonSets: {}
+                f:skipWaitForDeleteTimeoutSeconds: {}
+                f:timeout: {}
+      manager: rancher
+      operation: Update
+      time: '2024-02-13T09:51:48Z'
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:clusterName: {}
+          f:conditions: {}
+          f:fleetWorkspaceName: {}
+          f:observedGeneration: {}
+      manager: rancher
+      operation: Update
+      subresource: status
+      time: '2024-02-13T09:51:55Z'
+  name: ds-hardened-cluster-01
+  namespace: fleet-default
+  resourceVersion: '28691664'
+  uid: b763f94b-a500-4bc6-bf01-7ec8d57703de
+spec:
+  defaultPodSecurityAdmissionConfigurationTemplateName: rancher-restricted
+  kubernetesVersion: v1.27.8+rke2r1
+  localClusterAuthEndpoint: {}
+  rkeConfig:
+    chartValues:
+      rke2-cilium:
+        hubble:
+          enabled: true
+          relay:
+            enabled: true
+          ui:
+            enabled: true
+        operator:
+          replicas: 1
+    etcd:
+      s3:
+        bucket: rancher-backups
+        endpoint: s3.brynnharrison.com
+        folder: /ds-hardened-cluster-01
+        region: eu-west-1
+      snapshotRetention: 5
+      snapshotScheduleCron: 0 */5 * * *
+    machineGlobalConfig:
+      cni: cilium
+      disable-kube-proxy: false
+      etcd-expose-metrics: false
+      kube-apiserver-arg:
+        - >-
+          admission-control-config-file=/etc/rancher/rke2/config/rancher-psact.yaml
+    machinePoolDefaults: {}
+    machineSelectorConfig:
+      - config:
+          profile: cis-1.23
+          protect-kernel-defaults: true
+          system-default-registry: harbor.brynnharrison.com
+    machineSelectorFiles:
+      - fileSources:
+          - configMap:
+              name: ''
+            secret:
+              items:
+                - hash: XTHEF2B5RKKEchq1kPEPl4TBMSZmBWet+3EHDzy7Tsg=
+                  key: admission-config-psact
+                  path: /etc/rancher/rke2/config/rancher-psact.yaml
+              name: ds-hardened-cluster-01-admission-configuration-psact
+        machineLabelSelector:
+          matchLabels:
+            rke.cattle.io/control-plane-role: 'true'
+    registries:
+      configs:
+        harbor.brynnharrison.com:
+          authConfigSecretName: registryconfig-auth-l2zmc
+      mirrors:
+        docker.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): docker.io/$1
+        gcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): gcr.io/$1
+        ghcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): ghcr.io/$1
+        k8s.gcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): k8s.gcr.io/$1
+        quay.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): quay.io/$1
+        registry.rancher.com:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): registry.rancher.com/$1
+    upgradeStrategy:
+      controlPlaneConcurrency: '1'
+      controlPlaneDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
+      workerConcurrency: '1'
+      workerDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
+status:
+  clusterName: c-m-6ds8mb8l
+  conditions:
+    - lastUpdateTime: '2024-02-13T09:51:47Z'
+      reason: Reconciling
+      status: 'True'
+      type: Reconciling
+    - lastUpdateTime: '2024-02-13T09:51:47Z'
+      status: 'False'
+      type: Stalled
+    - lastUpdateTime: '2024-02-13T09:51:55Z'
+      status: 'True'
+      type: Created
+    - lastUpdateTime: '2024-02-13T09:51:50Z'
+      status: 'True'
+      type: RKECluster
+    - lastUpdateTime: '2024-02-13T09:51:47Z'
+      status: 'True'
+      type: BackingNamespaceCreated
+    - lastUpdateTime: '2024-02-13T09:51:47Z'
+      status: 'True'
+      type: DefaultProjectCreated
+    - lastUpdateTime: '2024-02-13T09:51:48Z'
+      status: 'True'
+      type: SystemProjectCreated
+    - lastUpdateTime: '2024-02-13T09:51:48Z'
+      status: 'True'
+      type: InitialRolesPopulated
+    - lastUpdateTime: '2024-02-13T09:51:49Z'
+      message: >-
+        waiting for at least one control plane, etcd, and worker node to be
+        registered
+      reason: Waiting
+      status: Unknown
+      type: Updated
+    - lastUpdateTime: '2024-02-13T09:51:49Z'
+      message: >-
+        waiting for at least one control plane, etcd, and worker node to be
+        registered
+      reason: Waiting
+      status: Unknown
+      type: Provisioned
+    - lastUpdateTime: '2024-02-13T09:51:49Z'
+      message: >-
+        waiting for at least one control plane, etcd, and worker node to be
+        registered
+      reason: Waiting
+      status: Unknown
+      type: Ready
+    - lastUpdateTime: '2024-02-13T09:51:49Z'
+      status: 'True'
+      type: CreatorMadeOwner
+    - lastUpdateTime: '2024-02-13T09:51:52Z'
+      status: 'True'
+      type: NoDiskPressure
+    - lastUpdateTime: '2024-02-13T09:51:52Z'
+      status: 'True'
+      type: NoMemoryPressure
+    - lastUpdateTime: '2024-02-13T09:51:52Z'
+      status: 'True'
+      type: SecretsMigrated
+    - lastUpdateTime: '2024-02-13T09:51:52Z'
+      status: 'True'
+      type: ServiceAccountSecretsMigrated
+    - lastUpdateTime: '2024-02-13T09:51:52Z'
+      status: 'True'
+      type: RKESecretsMigrated
+    - lastUpdateTime: '2024-02-13T09:51:53Z'
+      status: 'True'
+      type: ACISecretsMigrated
+    - lastUpdateTime: '2024-02-13T09:51:55Z'
+      status: 'False'
+      type: Connected
+  fleetWorkspaceName: fleet-default
+  observedGeneration: 2
