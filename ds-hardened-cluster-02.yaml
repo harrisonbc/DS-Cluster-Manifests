@@ -1,0 +1,116 @@
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  name: ds-hardened-cluster-02
+  namespace: fleet-default
+spec:
+  defaultPodSecurityAdmissionConfigurationTemplateName: rancher-restricted
+  kubernetesVersion: v1.27.8+rke2r1
+  localClusterAuthEndpoint: {}
+  rkeConfig:
+    chartValues:
+      rke2-cilium:
+        hubble:
+          enabled: true
+          relay:
+            enabled: true
+          ui:
+            enabled: true
+        operator:
+          replicas: 1
+    etcd:
+      s3:
+        bucket: rancher-backups
+        endpoint: s3.brynnharrison.com
+        folder: /ds-hardened-cluster-02
+        region: eu-west-1
+      snapshotRetention: 5
+      snapshotScheduleCron: 0 */5 * * *
+    machineGlobalConfig:
+      cni: cilium
+      disable-kube-proxy: false
+      etcd-expose-metrics: false
+      kube-apiserver-arg:
+        - >-
+          admission-control-config-file=/etc/rancher/rke2/config/rancher-psact.yaml
+    machinePoolDefaults: {}
+    machineSelectorConfig:
+      - config:
+          profile: cis-1.23
+          protect-kernel-defaults: true
+          system-default-registry: harbor.brynnharrison.com
+    machineSelectorFiles:
+      - fileSources:
+          - configMap:
+              name: ''
+            secret:
+              items:
+                - hash: XTHEF2B5RKKEchq1kPEPl4TBMSZmBWet+3EHDzy7Tsg=
+                  key: admission-config-psact
+                  path: /etc/rancher/rke2/config/rancher-psact.yaml
+              name: ds-hardened-cluster-02-admission-configuration-psact
+        machineLabelSelector:
+          matchLabels:
+            rke.cattle.io/control-plane-role: 'true'
+    registries:
+      configs:
+        harbor.brynnharrison.com:
+          authConfigSecretName: registryconfig-auth-l2zmc
+      mirrors:
+        docker.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): docker.io/$1
+        gcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): gcr.io/$1
+        ghcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): ghcr.io/$1
+        k8s.gcr.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): k8s.gcr.io/$1
+        quay.io:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): quay.io/$1
+        registry.rancher.com:
+          endpoint:
+            - https://harbor.brynnharrison.com
+          rewrite:
+            (.*): registry.rancher.com/$1
+    upgradeStrategy:
+      controlPlaneConcurrency: '1'
+      controlPlaneDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
+      workerConcurrency: '1'
+      workerDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
